@@ -2,7 +2,16 @@ import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
-import { insertPostSchema, insertProjectSchema, insertTechStackSchema, insertInterestSchema, insertActivitySchema, insertProfileSchema } from "@shared/schema";
+import { 
+  insertPostSchema, 
+  insertProjectSchema, 
+  insertTechStackSchema, 
+  insertInterestSchema, 
+  insertActivitySchema, 
+  insertProfileSchema,
+  insertContactSchema,
+  insertCommentSchema
+} from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API endpoints
@@ -149,6 +158,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertPostSchema.parse(req.body);
       const post = await storage.createPost(validatedData);
       res.status(201).json(post);
+    } catch (error) {
+      res.status(400).json({ message: (error as Error).message });
+    }
+  });
+  
+  // Contact endpoints
+  apiRouter.get("/contacts", async (_req: Request, res: Response) => {
+    try {
+      const contacts = await storage.getContacts();
+      res.json(contacts);
+    } catch (error) {
+      res.status(500).json({ message: (error as Error).message });
+    }
+  });
+  
+  apiRouter.get("/contacts/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const contact = await storage.getContact(id);
+      
+      if (!contact) {
+        return res.status(404).json({ message: "Contact not found" });
+      }
+      
+      res.json(contact);
+    } catch (error) {
+      res.status(500).json({ message: (error as Error).message });
+    }
+  });
+  
+  apiRouter.post("/contacts", async (req: Request, res: Response) => {
+    try {
+      const validatedData = insertContactSchema.parse(req.body);
+      const contact = await storage.createContact(validatedData);
+      res.status(201).json(contact);
+    } catch (error) {
+      res.status(400).json({ message: (error as Error).message });
+    }
+  });
+  
+  apiRouter.put("/contacts/:id/mark-as-read", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const contact = await storage.markContactAsRead(id);
+      res.json(contact);
+    } catch (error) {
+      res.status(400).json({ message: (error as Error).message });
+    }
+  });
+  
+  // Comment endpoints
+  apiRouter.get("/comments", async (_req: Request, res: Response) => {
+    try {
+      const comments = await storage.getComments();
+      res.json(comments);
+    } catch (error) {
+      res.status(500).json({ message: (error as Error).message });
+    }
+  });
+  
+  apiRouter.get("/posts/:postId/comments", async (req: Request, res: Response) => {
+    try {
+      const postId = parseInt(req.params.postId);
+      const comments = await storage.getCommentsByPostId(postId);
+      res.json(comments);
+    } catch (error) {
+      res.status(500).json({ message: (error as Error).message });
+    }
+  });
+  
+  apiRouter.post("/comments", async (req: Request, res: Response) => {
+    try {
+      const validatedData = insertCommentSchema.parse(req.body);
+      const comment = await storage.createComment(validatedData);
+      res.status(201).json(comment);
+    } catch (error) {
+      res.status(400).json({ message: (error as Error).message });
+    }
+  });
+  
+  apiRouter.put("/comments/:id/approve", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const comment = await storage.approveComment(id);
+      res.json(comment);
     } catch (error) {
       res.status(400).json({ message: (error as Error).message });
     }
