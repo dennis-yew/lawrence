@@ -35,16 +35,40 @@ export class PgStorage implements IStorage {
   }
 
   async getPosts(): Promise<Post[]> {
-    return await db.select().from(posts).orderBy(posts.createdAt);
+    return await db.select({
+      id: posts.id,
+      title: posts.title,
+      content: posts.content,
+      imageUrl: posts.imageUrl,
+      createdAt: posts.createdAt,
+      userId: posts.userId,
+      language: posts.language
+    }).from(posts).orderBy(posts.createdAt);
   }
 
   async getPost(id: number): Promise<Post | undefined> {
-    const result = await db.select().from(posts).where(eq(posts.id, id)).limit(1);
+    const result = await db.select({
+      id: posts.id,
+      title: posts.title,
+      content: posts.content,
+      imageUrl: posts.imageUrl,
+      createdAt: posts.createdAt,
+      userId: posts.userId,
+      language: posts.language
+    }).from(posts).where(eq(posts.id, id)).limit(1);
     return result[0];
   }
 
   async createPost(insertPost: InsertPost): Promise<Post> {
-    const result = await db.insert(posts).values(insertPost).returning();
+    const result = await db.insert(posts).values(insertPost).returning({
+      id: posts.id,
+      title: posts.title,
+      content: posts.content,
+      imageUrl: posts.imageUrl,
+      createdAt: posts.createdAt,
+      userId: posts.userId,
+      language: posts.language
+    });
     return result[0];
   }
 
