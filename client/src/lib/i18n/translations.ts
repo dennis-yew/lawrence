@@ -17,6 +17,14 @@ export const translations = {
     projects: {
       title: 'Projects'
     },
+    activity: {
+      title: 'Activity',
+      subtitle: 'Last 6 months',
+      contributions: 'contributions',
+      days: 'Sun,Mon,Tue,Wed,Thu,Fri,Sat',
+      less: 'Less',
+      more: 'More'
+    },
     activities: {
       title: 'Activities',
       contributions: 'contributions'
@@ -55,6 +63,14 @@ export const translations = {
     },
     projects: {
       title: '项目'
+    },
+    activity: {
+      title: '活动',
+      subtitle: '最近6个月',
+      contributions: '贡献',
+      days: '周日,周一,周二,周三,周四,周五,周六',
+      less: '较少',
+      more: '较多'
     },
     activities: {
       title: '活动记录',

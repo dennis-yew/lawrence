@@ -41,8 +41,7 @@ export class PgStorage implements IStorage {
       content: posts.content,
       imageUrl: posts.imageUrl,
       createdAt: posts.createdAt,
-      userId: posts.userId,
-      language: posts.language
+      userId: posts.userId
     }).from(posts).orderBy(posts.createdAt);
   }
 
@@ -53,8 +52,7 @@ export class PgStorage implements IStorage {
       content: posts.content,
       imageUrl: posts.imageUrl,
       createdAt: posts.createdAt,
-      userId: posts.userId,
-      language: posts.language
+      userId: posts.userId
     }).from(posts).where(eq(posts.id, id)).limit(1);
     return result[0];
   }
@@ -66,8 +64,7 @@ export class PgStorage implements IStorage {
       content: posts.content,
       imageUrl: posts.imageUrl,
       createdAt: posts.createdAt,
-      userId: posts.userId,
-      language: posts.language
+      userId: posts.userId
     });
     return result[0];
   }

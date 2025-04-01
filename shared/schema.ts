@@ -23,7 +23,6 @@ export const posts = pgTable("posts", {
   imageUrl: text("image_url"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   userId: integer("user_id").notNull(),
-  language: text("language").default("en"),
 });
 
 export const insertPostSchema = createInsertSchema(posts).pick({
@@ -31,7 +30,6 @@ export const insertPostSchema = createInsertSchema(posts).pick({
   content: true,
   imageUrl: true,
   userId: true,
-  language: true,
 });
 
 export type InsertPost = z.infer<typeof insertPostSchema>;
