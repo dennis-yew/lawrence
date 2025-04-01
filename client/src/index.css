@@ -12,7 +12,7 @@
   }
 }
 
-/* 代码高亮的额外样式 */
+/* 代码块和复制按钮样式 */
 .code-block {
   position: relative;
   margin: 1.5rem 0;
@@ -22,93 +22,12 @@
 
 .code-block pre {
   margin: 0;
-  padding: 1rem;
-  overflow-x: auto;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.875rem;
   line-height: 1.7;
-}
-
-.code-block code {
-  display: block;
-  font-family: inherit;
-  padding: 0;
   tab-size: 2;
 }
 
-/* 修复Prism代码高亮的一些常见问题 */
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-  color: #8292a2;
-  font-style: italic;
-}
-
-.token.namespace {
-  opacity: 0.7;
-}
-
-.token.string,
-.token.attr-value {
-  color: #a8ff60;
-}
-
-.token.punctuation,
-.token.operator {
-  color: #ccc;
-}
-
-.token.entity,
-.token.url,
-.token.symbol,
-.token.number,
-.token.boolean,
-.token.variable,
-.token.constant,
-.token.property,
-.token.regex,
-.token.inserted {
-  color: #f8c555;
-}
-
-.token.atrule,
-.token.keyword,
-.token.attr-name,
-.language-autohotkey .token.selector {
-  color: #e2777a;
-}
-
-.token.function,
-.token.deleted,
-.language-autohotkey .token.tag {
-  color: #7ec699;
-}
-
-.token.tag,
-.token.selector,
-.language-autohotkey .token.keyword {
-  color: #39adb5;
-}
-
-.token.important,
-.token.bold {
-  font-weight: bold;
-}
-
-.token.italic {
-  font-style: italic;
-}
-
-/* 适应深色模式的样式 */
-.dark .token.comment,
-.dark .token.prolog,
-.dark .token.doctype,
-.dark .token.cdata {
-  color: #6c7a89;
-}
-
-/* 复制按钮样式 */
 .copy-button {
   transition: all 0.2s ease;
   z-index: 5;
