@@ -29,7 +29,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
       <div className="w-full h-px bg-gray-200 dark:bg-gray-700 my-4"></div>
       
       <div className="social-links w-full">
-        <a href={`https://github.com/${profile.github}`} target="_blank" rel="noopener noreferrer" 
+        <a href="https://github.com/dennis-yew" target="_blank" rel="noopener noreferrer" 
            className="flex items-center justify-center py-2 hover:bg-white hover:bg-opacity-50 dark:hover:bg-gray-700 dark:hover:bg-opacity-70 rounded-lg mb-2 transition-colors">
           <FaGithub className="mr-2 dark:text-gray-300" />
           <span className="dark:text-gray-300">GitHub</span>

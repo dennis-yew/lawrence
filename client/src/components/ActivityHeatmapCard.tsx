@@ -64,10 +64,14 @@ export default function ActivityHeatmapCard({ activities }: ActivityHeatmapCardP
                       margin: '2px',
                       borderRadius: '2px',
                       backgroundColor: cell.count === 0 
-                        ? (document.documentElement.classList.contains('dark') ? '#2d3748' : '#eeeeee') 
-                        : cell.count < 5 
-                          ? (document.documentElement.classList.contains('dark') ? '#6b46c1' : '#d1c1e0') 
-                          : (document.documentElement.classList.contains('dark') ? '#805ad5' : '#9b59b6'),
+                        ? (document.documentElement.classList.contains('dark') ? '#161b22' : '#ebedf0')
+                        : cell.count < 3
+                          ? (document.documentElement.classList.contains('dark') ? '#0e4429' : '#9be9a8')
+                          : cell.count < 6
+                            ? (document.documentElement.classList.contains('dark') ? '#006d32' : '#40c463')
+                            : cell.count < 9
+                              ? (document.documentElement.classList.contains('dark') ? '#26a641' : '#30a14e')
+                              : (document.documentElement.classList.contains('dark') ? '#39d353' : '#216e39'),
                       opacity: cell.opacity
                     }}
                     title={`${cell.date}: ${cell.count} ${t('activity.contributions')}`}
