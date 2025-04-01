@@ -71,8 +71,7 @@ export default function ActivityHeatmapCard({ activities }: ActivityHeatmapCardP
                             ? (document.documentElement.classList.contains('dark') ? '#006d32' : '#40c463')
                             : cell.count < 9
                               ? (document.documentElement.classList.contains('dark') ? '#26a641' : '#30a14e')
-                              : (document.documentElement.classList.contains('dark') ? '#39d353' : '#216e39'),
-                      opacity: cell.opacity
+                              : (document.documentElement.classList.contains('dark') ? '#39d353' : '#216e39')
                     }}
                     title={`${cell.date}: ${cell.count} ${t('activity.contributions')}`}
                   >
