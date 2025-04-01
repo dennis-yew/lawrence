@@ -101,17 +101,35 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre className="m-0 p-4 overflow-x-auto" style={style}>
-            {tokens.map((line, lineIndex) => (
-              <div key={lineIndex} {...getLineProps({ line, key: lineIndex })}>
-                {/* 添加行号 */}
-                <span className="inline-block w-8 opacity-50 text-right mr-4 select-none">
-                  {lineIndex + 1}
-                </span>
-                {line.map((token, tokenIndex) => (
-                  <span key={tokenIndex} {...getTokenProps({ token, key: tokenIndex })} />
+            <div className="grid" style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'auto 1fr',
+              width: '100%'
+            }}>
+              {/* 行号列 */}
+              <div className="line-numbers" style={{ userSelect: 'none' }}>
+                {tokens.map((_, lineIndex) => (
+                  <span 
+                    key={lineIndex}
+                    className="block text-right opacity-50 select-none"
+                    style={{ color: 'rgba(220, 220, 220, 0.5)', paddingRight: '1rem' }}
+                  >
+                    {lineIndex + 1}
+                  </span>
                 ))}
               </div>
-            ))}
+              
+              {/* 代码内容列 */}
+              <div className="code-content">
+                {tokens.map((line, lineIndex) => (
+                  <div key={lineIndex} {...getLineProps({ line, key: lineIndex })} style={{ paddingLeft: '0.5rem' }}>
+                    {line.map((token, tokenIndex) => (
+                      <span key={tokenIndex} {...getTokenProps({ token, key: tokenIndex })} />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
           </pre>
         )}
       </Highlight>
