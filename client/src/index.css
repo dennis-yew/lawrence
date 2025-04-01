@@ -2,6 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Notion 风格的文章样式 */
+.notion-style {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  max-width: 100%;
+  line-height: 1.6;
+}
+
+/* Notion 风格的内容区 */
+.notion-content {
+  font-size: 1.1rem;
+  color: rgba(55, 53, 47, 0.9);
+}
+
+.dark .notion-content {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Notion风格的背景色 */
+body {
+  background-color: #ffffff;
+}
+
+.dark body {
+  background-color: #191919;
+}
+
+/* Notion风格的标题 */
+.notion-style h1 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Notion风格的水平分隔线 */
+.prose hr {
+  height: 1px;
+  border: none;
+  background-color: rgba(55, 53, 47, 0.1);
+  margin: 2rem 0;
+}
+
+.dark .prose hr {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 /* 移除 react-markdown 生成的代码块容器的默认样式 */
 .prose pre {
   margin: 0 !important;
@@ -22,6 +66,45 @@
   box-shadow: none !important;
 }
 
+/* Notion 风格的表格 */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.dark .prose table {
+  background-color: rgba(20, 20, 30, 0.1);
+}
+
+/* Notion 风格的引用块 */
+.prose blockquote {
+  font-style: normal;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-left: 3px solid #ddd;
+  padding: 1rem 1.2rem;
+  margin: 1.5rem 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.dark .prose blockquote {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Notion 风格的清单 */
+.prose ul, .prose ol {
+  padding-left: 1.5rem;
+  margin: 1.2rem 0;
+}
+
+.prose li {
+  margin: 0.5rem 0;
+  padding-left: 0.2rem;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -32,13 +115,22 @@
   }
 }
 
-/* 代码块和复制按钮样式 */
+/* 代码块和复制按钮样式 - Notion风格 */
 .code-block {
   position: relative;
   margin: 1.5rem 0;
   border-radius: 0.375rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   overflow: hidden;
+  font-size: 0.9rem;
+  background: #f7f6f3;  /* Notion代码块的浅色背景 */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .code-block {
+  background: #151718;  /* Notion代码块的暗色背景 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .code-block pre {

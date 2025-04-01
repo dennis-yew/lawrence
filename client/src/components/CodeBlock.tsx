@@ -72,21 +72,22 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
   };
 
   return (
-    <div className="code-block rounded-lg overflow-hidden my-4 bg-[#011627] dark:bg-[#011627] relative group">
-      {/* 文件名及顶部工具栏 */}
-      <div className="bg-[#0b2942] dark:bg-[#0b2942] py-1.5 px-4 flex justify-between items-center border-b border-[#122d42]">
+    <div className="code-block rounded-lg overflow-hidden my-6 bg-[#f7f6f3] dark:bg-[#151718] relative group">
+      {/* 文件名及顶部工具栏 - Notion风格 */}
+      <div className="bg-[#f5f5f5] dark:bg-[#2d2d2d] py-2 px-4 flex justify-between items-center border-b border-[#e0e0e0] dark:border-[#3a3a3a]">
         {fileName ? (
-          <div className="text-[#d6deeb] dark:text-[#d6deeb] text-sm font-mono">
+          <div className="text-[#37352f] dark:text-[#e6e6e6] text-xs font-medium">
             {fileName}
           </div>
         ) : (
-          <div className="text-[#82aaff] dark:text-[#82aaff] text-sm font-mono">
-            {language}
+          <div className="text-[#787774] dark:text-[#aaa] text-xs font-medium">
+            {language.toUpperCase()}
           </div>
         )}
         <button
           onClick={handleCopy}
-          className="copy-button text-xs bg-[#1d3b53] hover:bg-[#234869] text-[#d6deeb] py-1 px-2 rounded 
+          className="copy-button text-xs bg-[#eeeeee] hover:bg-[#e0e0e0] dark:bg-[#383838] dark:hover:bg-[#444] 
+                   text-[#37352f] dark:text-[#ddd] py-1 px-3 rounded 
                    transition-colors duration-200 opacity-0 group-hover:opacity-100"
         >
           {copied ? '已复制！' : '复制代码'}

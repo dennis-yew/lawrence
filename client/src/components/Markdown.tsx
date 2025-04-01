@@ -90,7 +90,17 @@ export const Markdown: React.FC<MarkdownProps> = ({ content }) => {
   };
 
   return (
-    <div className="prose dark:prose-invert max-w-none">
+    <div className="prose dark:prose-invert prose-lg max-w-none prose-headings:font-semibold prose-headings:text-gray-900 dark:prose-headings:text-gray-100
+                    prose-h1:text-3xl prose-h2:text-2xl prose-h2:border-b prose-h2:border-gray-200 dark:prose-h2:border-gray-800 prose-h2:pb-2 prose-h2:mt-12
+                    prose-h3:text-xl prose-h4:text-lg
+                    prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-7 
+                    prose-a:text-blue-600 dark:prose-a:text-blue-500 prose-a:no-underline hover:prose-a:underline
+                    prose-blockquote:border-l-4 prose-blockquote:border-gray-300 dark:prose-blockquote:border-gray-700 
+                    prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-700 dark:prose-blockquote:text-gray-400
+                    prose-ul:list-disc prose-ul:pl-5 prose-ol:pl-5
+                    prose-li:my-2 prose-li:text-gray-700 dark:prose-li:text-gray-300
+                    prose-img:rounded-md prose-img:shadow-sm dark:prose-img:shadow-none
+                    prose-hr:border-gray-200 dark:prose-hr:border-gray-800 prose-hr:my-8">
       <ReactMarkdown 
         remarkPlugins={[remarkGfm]}
         components={customRenderers}

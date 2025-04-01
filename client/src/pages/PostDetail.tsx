@@ -66,22 +66,29 @@ export default function PostDetail() {
   }
 
   return (
-    <div className="container mx-auto py-12 px-4">
-      <div className="mb-6">
-        <Link href="/" className="text-blue-500 dark:text-blue-400 hover:underline flex items-center">
+    <div className="container max-w-4xl mx-auto py-12 px-4">
+      <div className="mb-8">
+        <Link href="/" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transition-colors flex items-center text-sm">
           <ArrowLeft className="mr-2" size={16} />
           {t('blogPosts.backToHome')}
         </Link>
       </div>
       
-      <article className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 lg:p-10">
-        <h1 className="text-3xl font-bold mb-4 dark:text-white">{post.title}</h1>
-        <div className="text-gray-500 dark:text-gray-400 mb-8">
-          {post.createdAt ? format(parseISO(post.createdAt), 'MMMM d, yyyy') : ''}
+      <article className="notion-style">
+        {/* 大标题区 */}
+        <div className="mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 dark:text-white leading-tight">{post.title}</h1>
+          <div className="text-gray-500 dark:text-gray-400 flex items-center text-sm">
+            <span className="flex items-center">
+              {post.createdAt ? format(parseISO(post.createdAt), 'MMMM d, yyyy') : ''}
+            </span>
+          </div>
         </div>
         
-        {/* Use the Markdown component to render the post content */}
-        <Markdown content={post.content} />
+        {/* 文章内容 - 使用新的样式，无边框，更干净 */}
+        <div className="notion-content">
+          <Markdown content={post.content} />
+        </div>
       </article>
     </div>
   );
