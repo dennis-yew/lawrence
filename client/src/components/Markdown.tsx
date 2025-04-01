@@ -17,7 +17,7 @@ export const Markdown: React.FC<MarkdownProps> = ({ content }) => {
       
       if (inline) {
         return (
-          <code className="bg-gray-100 dark:bg-gray-800 rounded px-1 py-0.5 text-sm font-mono" {...props}>
+          <code className="bg-gray-800 rounded px-1 py-0.5 text-sm font-mono text-gray-200" {...props}>
             {children}
           </code>
         );
@@ -100,7 +100,8 @@ export const Markdown: React.FC<MarkdownProps> = ({ content }) => {
                     prose-ul:list-disc prose-ul:pl-5 prose-ol:pl-5
                     prose-li:my-2 prose-li:text-gray-700 dark:prose-li:text-gray-300
                     prose-img:rounded-md prose-img:shadow-sm dark:prose-img:shadow-none
-                    prose-hr:border-gray-200 dark:prose-hr:border-gray-800 prose-hr:my-8">
+                    prose-hr:border-gray-200 dark:prose-hr:border-gray-800 prose-hr:my-8
+                    prose-pre:bg-[#151718] prose-pre:text-white">
       <ReactMarkdown 
         remarkPlugins={[remarkGfm]}
         components={customRenderers}
