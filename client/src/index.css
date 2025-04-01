@@ -120,11 +120,11 @@ body {
   position: relative;
   margin: 1.5rem 0;
   border-radius: 0.375rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
   overflow: hidden;
   font-size: 0.9rem;
-  background: #f7f6f3;  /* Notion代码块的浅色背景 */
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #f2f1ed;  /* 更柔和的浅色背景 */
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .dark .code-block {
@@ -141,6 +141,7 @@ body {
   tab-size: 2;
   width: 100%;
   overflow-x: auto;
+  color-scheme: light dark; /* 确保滚动条颜色适应当前主题 */
 }
 
 /* 代码内容行样式 */
@@ -158,6 +159,12 @@ body {
   opacity: 0.5;
   text-align: right;
   user-select: none;
+  font-size: 0.75rem; /* 行号略小一些 */
+}
+
+/* 白天模式特定样式 */
+:root:not(.dark) .code-block .code-content {
+  border-left-color: #dedad5; /* 更柔和的分隔线 */
 }
 
 /* 复制按钮样式 */
