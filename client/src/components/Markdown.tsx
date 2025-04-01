@@ -14,14 +14,16 @@ export const Markdown: React.FC<MarkdownProps> = ({ content }) => {
   const customRenderers = {
     code: ({ node, inline, className, children, ...props }: MarkdownComponentProps) => {
       const match = /language-(\w+)/.exec(className || '');
+      const language = match ? match[1] : 'text';
       
-      if (inline) {
-        return (
-          <code className="bg-gray-100 dark:bg-gray-800 rounded px-1 py-0.5 text-sm font-mono" {...props}>
-            {children}
-          </code>
-        );
-      }
+      // 所有代码块都使用 CodeBlock 组件
+      const code = String(children).replace(/\n$/, '');
+      return (
+        <CodeBlock
+          code={code}
+          language={language}
+        />
+      );
 
       // 处理代码内容和可能的文件名
       const rawContent = String(children).replace(/\n$/, '');
