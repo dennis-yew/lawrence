@@ -4,6 +4,7 @@ import { useTranslation } from '@/lib/LanguageContext';
 import { ArrowLeft } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { ApiPost } from '@/types/api';
+import { Markdown } from '@/components/Markdown';
 
 export default function PostDetail() {
   const [, params] = useRoute('/posts/:id');
@@ -79,9 +80,8 @@ export default function PostDetail() {
           {post.createdAt ? format(parseISO(post.createdAt), 'MMMM d, yyyy') : ''}
         </div>
         
-        <div className="prose dark:prose-invert max-w-none">
-          <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{post.content}</p>
-        </div>
+        {/* Use the Markdown component to render the post content */}
+        <Markdown content={post.content} />
       </article>
     </div>
   );
