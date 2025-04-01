@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import copy from 'copy-to-clipboard';
 import { Highlight, themes, type Language } from 'prism-react-renderer';
-import { useTheme } from '../lib/ThemeContext';
 
 interface CodeBlockProps {
   code: string;
@@ -59,7 +58,6 @@ const getLanguage = (lang: string): Language => {
 
 export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }) => {
   const [copied, setCopied] = useState(false);
-  const { theme } = useTheme();
   const normalizedLanguage = getLanguage(language);
   
   // 复制代码到剪贴板

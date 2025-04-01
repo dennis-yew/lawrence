@@ -17,7 +17,7 @@ export const Markdown: React.FC<MarkdownProps> = ({ content }) => {
       
       if (inline) {
         return (
-          <code className="bg-gray-800 rounded px-1 py-0.5 text-sm font-mono text-gray-200" {...props}>
+          <code className="bg-[#1E1E1E] text-[#D4D4D4] rounded px-1 py-0.5 text-sm font-mono" {...props}>
             {children}
           </code>
         );
