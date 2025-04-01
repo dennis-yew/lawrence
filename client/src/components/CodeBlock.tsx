@@ -103,16 +103,16 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
           <pre className="m-0 p-3 overflow-x-auto" style={{ ...style, margin: 0, padding: '0.75rem', background: 'transparent' }}>
             <div className="grid" style={{ 
               display: 'grid', 
-              gridTemplateColumns: 'auto 1fr',
+              gridTemplateColumns: '3rem 1fr',
               width: '100%'
             }}>
               {/* 行号列 */}
-              <div className="line-numbers" style={{ userSelect: 'none' }}>
+              <div className="line-numbers pr-2" style={{ userSelect: 'none', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                 {tokens.map((_, lineIndex) => (
                   <span 
                     key={lineIndex}
-                    className="block text-right opacity-50 select-none"
-                    style={{ color: 'rgba(220, 220, 220, 0.5)', paddingRight: '1rem' }}
+                    className="text-right opacity-50 select-none w-full"
+                    style={{ color: 'rgba(220, 220, 220, 0.5)', paddingRight: '1rem', textAlign: 'right' }}
                   >
                     {lineIndex + 1}
                   </span>
@@ -120,7 +120,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
               </div>
               
               {/* 代码内容列 */}
-              <div className="code-content">
+              <div className="code-content pl-3 border-l border-[#263b50]">
                 {tokens.map((line, lineIndex) => (
                   <div key={lineIndex} {...getLineProps({ line, key: lineIndex })} style={{ paddingLeft: '0.5rem' }}>
                     {line.map((token, tokenIndex) => (
