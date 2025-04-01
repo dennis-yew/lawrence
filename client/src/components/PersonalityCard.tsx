@@ -21,11 +21,11 @@ export default function PersonalityCard({ profile }: PersonalityCardProps) {
       
       <div className="personality-content text-center py-4">
         <div className="text-3xl font-bold mb-2 dark:text-white">INTJ</div>
-        <div className="text-gray-600 dark:text-gray-300 mb-6">{profile.personalityTitle}</div>
+        <div className="text-gray-600 dark:text-gray-300 mb-6">Mediator</div>
         
         <div className="illustration">
           <img 
-            src="https://raw.githubusercontent.com/personality-database/images/main/intj-avatar.png" 
+            src="https://www.16personalities.com/static/images/personality-types/avatars/intj-architect.svg" 
             alt="INTJ Personality"
             className="w-32 h-32 mx-auto rounded-full bg-purple-100 dark:bg-purple-900"
           />
