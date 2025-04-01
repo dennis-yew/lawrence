@@ -162,10 +162,7 @@ body {
   font-size: 0.75rem; /* 行号略小一些 */
 }
 
-/* 白天模式特定样式 */
-:root:not(.dark) .code-block .code-content {
-  border-left-color: #dedad5; /* 更柔和的分隔线 */
-}
+
 
 /* 复制按钮样式 */
 .copy-button {

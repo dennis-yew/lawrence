@@ -74,22 +74,22 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
   };
 
   return (
-    <div className="code-block rounded-lg overflow-hidden my-6 bg-[#f2f1ed] dark:bg-[#151718] relative group">
+    <div className="code-block rounded-lg overflow-hidden my-6 bg-[#151718] relative group">
       {/* 文件名及顶部工具栏 - Notion风格 */}
-      <div className="bg-[#ebe9e5] dark:bg-[#2d2d2d] py-2 px-4 flex justify-between items-center border-b border-[#e0e0e0] dark:border-[#3a3a3a]">
+      <div className="bg-[#2d2d2d] py-2 px-4 flex justify-between items-center border-b border-[#3a3a3a]">
         {fileName ? (
-          <div className="text-[#37352f] dark:text-[#e6e6e6] text-xs font-medium">
+          <div className="text-[#e6e6e6] text-xs font-medium">
             {fileName}
           </div>
         ) : (
-          <div className="text-[#787774] dark:text-[#aaa] text-xs font-medium">
+          <div className="text-[#aaa] text-xs font-medium">
             {language.toUpperCase()}
           </div>
         )}
         <button
           onClick={handleCopy}
-          className="copy-button text-xs bg-[#e0ddd8] hover:bg-[#d5d2cc] dark:bg-[#383838] dark:hover:bg-[#444] 
-                   text-[#37352f] dark:text-[#ddd] py-1 px-3 rounded 
+          className="copy-button text-xs bg-[#383838] hover:bg-[#444] 
+                   text-[#ddd] py-1 px-3 rounded 
                    transition-colors duration-200 opacity-0 group-hover:opacity-100"
         >
           {copied ? '已复制！' : '复制代码'}
@@ -98,29 +98,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
       
       {/* 代码内容 - 使用prism-react-renderer */}
       <Highlight
-        theme={theme === 'light' ? {
-          ...themes.nightOwl,
-          styles: themes.nightOwl.styles.map(style => {
-            // 修改主要文本颜色
-            if (style.style.color === '#d6deeb') {
-              return { ...style, style: { ...style.style, color: '#364f6b' } };
-            }
-            // 修改注释颜色
-            if (style.style.color === '#637777' || style.style.color === '#aaaaaa') {
-              return { ...style, style: { ...style.style, color: '#72818a' } };
-            }
-            // 修改关键字颜色
-            if (style.style.color === '#c792ea' || style.style.color === '#7fdbca') {
-              return { ...style, style: { ...style.style, color: '#0366d6' } };
-            }
-            // 修改字符串颜色
-            if (style.style.color === '#ecc48d' || style.style.color === '#addb67') {
-              return { ...style, style: { ...style.style, color: '#24936e' } };
-            }
-            // 其他颜色保持不变
-            return style;
-          })
-        } : themes.nightOwl}
+        theme={themes.nightOwl}
         code={code}
         language={normalizedLanguage}
       >
@@ -138,7 +116,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
                     key={lineIndex}
                     className="text-right opacity-50 select-none w-full"
                     style={{ 
-                      color: theme === 'dark' ? 'rgba(220, 220, 220, 0.5)' : 'rgba(50, 50, 50, 0.4)', 
+                      color: 'rgba(220, 220, 220, 0.5)', 
                       paddingRight: '1rem', 
                       textAlign: 'right' 
                     }}
@@ -149,7 +127,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
               </div>
               
               {/* 代码内容列 */}
-              <div className="code-content pl-3 border-l border-[#d0cfcb] dark:border-[#263b50]">
+              <div className="code-content pl-3 border-l border-[#263b50]">
                 {tokens.map((line, lineIndex) => (
                   <div key={lineIndex} {...getLineProps({ line, key: lineIndex })} style={{ paddingLeft: '0.5rem' }}>
                     {line.map((token, tokenIndex) => (
