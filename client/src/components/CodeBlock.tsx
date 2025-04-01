@@ -72,21 +72,21 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
   };
 
   return (
-    <div className="code-block rounded-lg overflow-hidden my-4 bg-gray-950 dark:bg-gray-950 relative group">
+    <div className="code-block rounded-lg overflow-hidden my-4 bg-[#011627] dark:bg-[#011627] relative group">
       {/* 文件名及顶部工具栏 */}
-      <div className="bg-gray-900 dark:bg-gray-900 py-1.5 px-4 flex justify-between items-center border-b border-gray-800">
+      <div className="bg-[#0b2942] dark:bg-[#0b2942] py-1.5 px-4 flex justify-between items-center border-b border-[#122d42]">
         {fileName ? (
-          <div className="text-gray-200 dark:text-gray-200 text-sm font-mono">
+          <div className="text-[#d6deeb] dark:text-[#d6deeb] text-sm font-mono">
             {fileName}
           </div>
         ) : (
-          <div className="text-gray-500 dark:text-gray-400 text-sm font-mono">
+          <div className="text-[#82aaff] dark:text-[#82aaff] text-sm font-mono">
             {language}
           </div>
         )}
         <button
           onClick={handleCopy}
-          className="copy-button text-xs bg-gray-700 hover:bg-gray-600 text-gray-200 py-1 px-2 rounded 
+          className="copy-button text-xs bg-[#1d3b53] hover:bg-[#234869] text-[#d6deeb] py-1 px-2 rounded 
                    transition-colors duration-200 opacity-0 group-hover:opacity-100"
         >
           {copied ? '已复制！' : '复制代码'}
@@ -100,7 +100,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
         language={normalizedLanguage}
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className="m-0 p-3 overflow-x-auto" style={{ ...style, margin: 0, padding: '0.75rem' }}>
+          <pre className="m-0 p-3 overflow-x-auto" style={{ ...style, margin: 0, padding: '0.75rem', background: 'transparent' }}>
             <div className="grid" style={{ 
               display: 'grid', 
               gridTemplateColumns: 'auto 1fr',
