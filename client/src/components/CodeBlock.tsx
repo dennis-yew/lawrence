@@ -72,9 +72,9 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
   };
 
   return (
-    <div className="code-block rounded-md overflow-hidden my-4 bg-gray-900 dark:bg-gray-900 relative group">
+    <div className="code-block rounded-lg overflow-hidden my-4 bg-gray-950 dark:bg-gray-950 relative group">
       {/* 文件名及顶部工具栏 */}
-      <div className="bg-gray-800 dark:bg-gray-800 py-2 px-4 flex justify-between items-center border-b border-gray-700">
+      <div className="bg-gray-900 dark:bg-gray-900 py-1.5 px-4 flex justify-between items-center border-b border-gray-800">
         {fileName ? (
           <div className="text-gray-200 dark:text-gray-200 text-sm font-mono">
             {fileName}
@@ -100,7 +100,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, fileName }
         language={normalizedLanguage}
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className="m-0 p-4 overflow-x-auto" style={style}>
+          <pre className="m-0 p-3 overflow-x-auto" style={{ ...style, margin: 0, padding: '0.75rem' }}>
             <div className="grid" style={{ 
               display: 'grid', 
               gridTemplateColumns: 'auto 1fr',
