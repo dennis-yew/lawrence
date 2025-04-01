@@ -36,12 +36,15 @@ export const Markdown: React.FC<MarkdownProps> = ({ content }) => {
         code = rawContent.replace(/^filename:\s*(.+?)\n/, '');
       }
 
+      // 不使用props传递给CodeBlock，避免将pre标签属性传递下去
       return (
-        <CodeBlock
-          code={code}
-          language={match ? match[1] : 'text'}
-          fileName={fileName}
-        />
+        <div className="markdown-code-block-wrapper">
+          <CodeBlock
+            code={code}
+            language={match ? match[1] : 'text'}
+            fileName={fileName}
+          />
+        </div>
       );
     },
     // 增强链接样式

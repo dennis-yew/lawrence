@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 移除 react-markdown 生成的代码块容器的默认样式 */
+.prose pre {
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 确保包装器不添加任何额外样式 */
+.markdown-code-block-wrapper {
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 @layer base {
   * {
     @apply border-border;
