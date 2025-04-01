@@ -1,11 +1,12 @@
 import { Card } from "@/components/ui/card";
 import { PenTool } from "lucide-react";
-import { type Post } from "@shared/schema";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { useTranslation } from "@/lib/LanguageContext";
+import { Link } from "wouter";
+import { ApiPost } from "@/types/api";
 
 interface BlogPostsCardProps {
-  posts: Post[];
+  posts: ApiPost[];
 }
 
 export default function BlogPostsCard({ posts }: BlogPostsCardProps) {
@@ -18,7 +19,7 @@ export default function BlogPostsCard({ posts }: BlogPostsCardProps) {
           <PenTool className="text-xl mr-2 dark:text-gray-300" />
           <h2 className="text-xl font-bold dark:text-white">{t('blogPosts.title')}</h2>
         </div>
-        <a href="#" className="text-purple-500 dark:text-purple-400 hover:underline text-sm">{t('blogPosts.viewAll')}</a>
+        <Link href="/blog" className="text-purple-500 dark:text-purple-400 hover:underline text-sm">{t('blogPosts.viewAll')}</Link>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -33,11 +34,11 @@ export default function BlogPostsCard({ posts }: BlogPostsCardProps) {
             </div>
             <div className="p-4">
               <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-                {format(new Date(post.createdAt), 'MMMM d, yyyy')}
+                {format(parseISO(post.createdAt), 'MMMM d, yyyy')}
               </div>
               <h3 className="font-bold mb-2 dark:text-white">{post.title}</h3>
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">{post.content}</p>
-              <a href={`/posts/${post.id}`} className="text-purple-500 dark:text-purple-400 text-sm hover:underline">{t('blogPosts.readMore')}</a>
+              <Link href={`/posts/${post.id}`} className="text-purple-500 dark:text-purple-400 text-sm hover:underline">{t('blogPosts.readMore')}</Link>
             </div>
           </div>
         ))}
