@@ -34,7 +34,7 @@ export default function BlogPostsCard({ posts }: BlogPostsCardProps) {
             </div>
             <div className="p-4">
               <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-                {format(parseISO(post.createdAt), 'MMMM d, yyyy')}
+                {post.createdAt ? format(parseISO(post.createdAt), 'MMMM d, yyyy') : ''}
               </div>
               <h3 className="font-bold mb-2 dark:text-white">{post.title}</h3>
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">{post.content}</p>

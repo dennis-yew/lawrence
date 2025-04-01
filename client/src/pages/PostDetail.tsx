@@ -11,7 +11,7 @@ export default function PostDetail() {
   const { t } = useTranslation();
   
   const { data: post, isLoading, error } = useQuery<ApiPost>({
-    queryKey: ['/api/posts', postId],
+    queryKey: [`/api/posts/${postId}`],
     enabled: !!postId
   });
 
@@ -76,7 +76,7 @@ export default function PostDetail() {
       <article className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 lg:p-10">
         <h1 className="text-3xl font-bold mb-4 dark:text-white">{post.title}</h1>
         <div className="text-gray-500 dark:text-gray-400 mb-8">
-          {format(parseISO(post.createdAt), 'MMMM d, yyyy')}
+          {post.createdAt ? format(parseISO(post.createdAt), 'MMMM d, yyyy') : ''}
         </div>
         
         <div className="prose dark:prose-invert max-w-none">
