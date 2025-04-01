@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 统一代码块样式，无论亮暗模式 */
+.code-block pre,
+.code-block pre * {
+  background-color: #151718 !important;
+  color: #d4d4d4 !important;
+}
+
 /* Notion 风格的文章样式 */
 .notion-style {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
