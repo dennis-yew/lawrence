@@ -20,16 +20,15 @@ export default function PersonalityCard({ profile }: PersonalityCardProps) {
       </div>
       
       <div className="personality-content text-center py-4">
-        <div className="text-3xl font-bold mb-2 dark:text-white">{profile.personalityType}</div>
+        <div className="text-3xl font-bold mb-2 dark:text-white">INTJ</div>
         <div className="text-gray-600 dark:text-gray-300 mb-6">{profile.personalityTitle}</div>
         
         <div className="illustration">
-          <svg className="w-32 h-32 mx-auto rounded-full text-blue-400 dark:text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-            <path d="M7 15s2 2 5 2 5-2 5-2" />
-            <circle cx="9" cy="9" r="1" />
-            <circle cx="15" cy="9" r="1" />
-          </svg>
+          <img 
+            src="https://raw.githubusercontent.com/personality-database/images/main/intj-avatar.png" 
+            alt="INTJ Personality"
+            className="w-32 h-32 mx-auto rounded-full bg-purple-100 dark:bg-purple-900"
+          />
         </div>
       </div>
     </Card>
