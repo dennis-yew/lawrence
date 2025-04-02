@@ -1,34 +1,73 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-import * as schema from "../shared/schema";
-import dotenv from "dotenv";
+import { Pool } from 'pg';
+import { drizzle } from "drizzle-orm/node-postgres";
+import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 
 // Load environment variables from .env file
 dotenv.config();
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL environment variable is not set");
+let pool: Pool;
+
+try {
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error('数据库连接字符串未设置');
+  }
+  
+  pool = new Pool({
+    connectionString,
+  });
+  
+  console.log('数据库连接初始化中...');
+} catch (error) {
+  console.error('初始化数据库连接池时出错:', error);
+  throw error;
 }
 
-// Create PostgreSQL connection client with retry logic
-const connectionString = process.env.DATABASE_URL;
-const client = postgres(connectionString, {
-  max: 1,
-  connect_timeout: 10,
-  idle_timeout: 20,
-  max_lifetime: 60 * 30,
-});
+export const db = drizzle(pool);
 
-// Create drizzle instance using the client and schema
-export const db = drizzle(client, { schema });
-
-// Test database connection
-export const testConnection = async () => {
+export async function testConnection() {
   try {
-    await client`SELECT 1`;
-    console.log("Database connection successful");
-  } catch (err) {
-    console.error("Error connecting to database:", err);
-    process.exit(1);
+    console.log('正在测试数据库连接...');
+    const client = await pool.connect();
+    const res = await client.query('SELECT version()');
+    console.log(`数据库连接成功！${res.rows[0].version}`);
+    client.release();
+    return true;
+  } catch (error) {
+    console.error('数据库连接测试失败:', error);
+    return false;
   }
-};
+}
+
+export async function runMigration(migrationFilePath: string) {
+  try {
+    const fullPath = path.join(process.cwd(), migrationFilePath);
+    
+    if (!fs.existsSync(fullPath)) {
+      console.warn(`迁移文件不存在: ${fullPath}`);
+      return false;
+    }
+    
+    const sql = fs.readFileSync(fullPath, 'utf8');
+    const client = await pool.connect();
+    
+    try {
+      await client.query('BEGIN');
+      await client.query(sql);
+      await client.query('COMMIT');
+      console.log(`✅ 成功执行迁移: ${migrationFilePath}`);
+      return true;
+    } catch (error) {
+      await client.query('ROLLBACK');
+      console.error(`❌ 迁移执行失败: ${migrationFilePath}`, error);
+      return false;
+    } finally {
+      client.release();
+    }
+  } catch (error) {
+    console.error(`❌ 无法执行迁移: ${migrationFilePath}`, error);
+    return false;
+  }
+}

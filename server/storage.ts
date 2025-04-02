@@ -145,24 +145,27 @@ export class MemStorage implements IStorage {
       description: 'Project description goes here...',
       icon: 'fa-skull-crossbones',
       iconBackground: 'bg-gray-700',
+      url: 'https://github.com/yourusername/extreme-death',
       userId: user.id 
-    });
+    } as InsertProject);
     
     await this.createProject({ 
       name: 'Personal Website', 
       description: 'My personal portfolio and blog',
       icon: 'fa-code',
       iconBackground: 'bg-mint',
+      url: 'https://github.com/yourusername/personal-website',
       userId: user.id 
-    });
+    } as InsertProject);
     
     await this.createProject({ 
       name: 'AI Project', 
       description: 'Machine learning experiments',
       icon: 'fa-robot',
       iconBackground: 'bg-purple-light',
+      url: 'https://github.com/yourusername/ai-project',
       userId: user.id 
-    });
+    } as InsertProject);
     
     // Create posts
     const now = new Date();
@@ -414,21 +417,56 @@ export class MemStorage implements IStorage {
 
 // Use PgStorage if DATABASE_URL is set, otherwise fallback to MemStorage
 import { PgStorage } from "./pgStorage";
+import pkg from "pg";
+const { Pool } = pkg;
+import dotenv from "dotenv";
 
-// Force use of PgStorage for this application
-const storage = new PgStorage();
+// 加载环境变量
+dotenv.config();
+
+// 创建数据库连接池
+let storage: IStorage;
+
+try {
+  if (!process.env.DATABASE_URL) {
+    console.warn('DATABASE_URL 环境变量未设置，使用内存存储');
+    storage = new MemStorage();
+  } else {
+    console.log('使用 PostgreSQL 数据库存储');
+    const pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: true
+    });
+    storage = new PgStorage(pool);
+  }
+} catch (error) {
+  console.error('初始化存储时出错:', error);
+  console.warn('回退到内存存储');
+  storage = new MemStorage();
+}
 
 // Initialize default data
 async function initializeData() {
   try {
-    // Check if we already have a user
-    const existingUsers = await storage.getUsers();
-    if (existingUsers && existingUsers.length > 0) {
-      console.log('Database already has data, skipping initialization');
-      return;
+    // 测试数据库连接
+    console.log('测试数据库连接...');
+    try {
+      // 检查用户是否存在
+      const existingUsers = await storage.getUsers();
+      if (existingUsers && existingUsers.length > 0) {
+        console.log('数据库已有数据，跳过初始化');
+        return;
+      }
+    } catch (testError) {
+      console.error('测试数据库连接失败:', testError);
+      if (storage instanceof MemStorage) {
+        console.log('使用内存存储，继续初始化默认数据');
+      } else {
+        throw new Error('数据库连接测试失败，无法初始化数据');
+      }
     }
-    
-    console.log('Initializing database with default data...');
+
+    console.log('初始化数据库默认数据...');
     
     // Create default user
     const defaultUser = await storage.createUser({
@@ -467,24 +505,27 @@ async function initializeData() {
       description: 'Project description goes here...',
       icon: 'fa-skull-crossbones',
       iconBackground: 'bg-gray-700',
+      url: 'https://github.com/yourusername/extreme-death',
       userId: defaultUser.id 
-    });
+    } as InsertProject);
     
     await storage.createProject({ 
       name: 'Personal Website', 
       description: 'My personal portfolio and blog',
       icon: 'fa-code',
       iconBackground: 'bg-mint',
+      url: 'https://github.com/yourusername/personal-website',
       userId: defaultUser.id 
-    });
+    } as InsertProject);
     
     await storage.createProject({ 
       name: 'AI Project', 
       description: 'Machine learning experiments',
       icon: 'fa-robot',
       iconBackground: 'bg-purple-light',
+      url: 'https://github.com/yourusername/ai-project',
       userId: defaultUser.id 
-    });
+    } as InsertProject);
     
     // Create posts
     await storage.createPost({
@@ -524,15 +565,22 @@ async function initializeData() {
       });
     }
     
-    console.log('Database initialization complete!');
+    console.log('数据库初始化完成！');
   } catch (error) {
-    console.error('Error initializing database:', error);
+    console.error('初始化数据库时出错:', error);
+    if (storage instanceof MemStorage) {
+      // 内存存储不需要特殊处理，错误记录即可
+    } else {
+      console.warn('数据库初始化失败，应用可能无法正常工作');
+    }
   }
 }
 
-// Initialize data in the background
-initializeData().catch(err => {
-  console.error('Failed to initialize data:', err);
-});
+// 在后台异步初始化数据，但不阻塞应用启动
+setTimeout(() => {
+  initializeData().catch(err => {
+    console.error('初始化数据失败:', err);
+  });
+}, 2000); // 延迟2秒，确保应用和数据库连接已经建立
 
 export { storage };

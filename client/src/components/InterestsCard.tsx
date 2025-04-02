@@ -11,6 +11,12 @@ export default function InterestsCard({ interests }: InterestsCardProps) {
   const { t } = useTranslation();
   
   const getIcon = (iconName: string) => {
+    // 检查是否为emoji或表情符号
+    if (iconName.length <= 2 || /^[^\w\s]/.test(iconName)) {
+      return <span className="text-2xl inline-flex justify-center items-center w-6">{iconName}</span>;
+    }
+    
+    // FontAwesome 图标
     switch (iconName) {
       case 'fa-music':
         return <FaMusic className="text-purple-500 dark:text-purple-400" />;
@@ -25,7 +31,8 @@ export default function InterestsCard({ interests }: InterestsCardProps) {
       case 'fa-laptop-code':
         return <FaLaptopCode className="text-purple-500 dark:text-purple-400" />;
       default:
-        return null;
+        // 如果不是已知的FontAwesome图标，作为文本显示
+        return <span className="text-lg inline-flex justify-center items-center w-6">{iconName}</span>;
     }
   };
 
@@ -39,7 +46,7 @@ export default function InterestsCard({ interests }: InterestsCardProps) {
       <div className="space-y-4">
         {interests.map((interest) => (
           <div key={interest.id} className="interest-item flex items-center">
-            <div className="icon-wrapper w-10 h-10 rounded-lg bg-white dark:bg-gray-700 flex items-center justify-center mr-3">
+            <div className="icon-wrapper w-10 h-10 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-3 text-white shadow-sm">
               {getIcon(interest.icon)}
             </div>
             <div>

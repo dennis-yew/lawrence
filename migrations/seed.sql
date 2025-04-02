@@ -17,11 +17,11 @@ BEGIN
     ('全栈开发者的日常工作流', '作为一名全栈开发者，如何平衡前后端开发工作？如何提高开发效率？本文将分享我的一些心得体会...', 'https://picsum.photos/800/400', user_id);
 
     -- 插入项目经历
-    INSERT INTO projects (name, description, icon, icon_background, user_id)
+    INSERT INTO projects (name, description, icon, icon_background, url, user_id)
     VALUES 
-    ('个人博客系统', '使用React、TypeScript和Node.js构建的现代化个人博客系统', '🚀', '#4F46E5', user_id),
-    ('在线协作平台', '基于WebSocket的实时协作平台，支持多人同时编辑', '👥', '#059669', user_id),
-    ('AI助手应用', '集成OpenAI API的智能助手应用，提供智能对话和内容生成功能', '🤖', '#7C3AED', user_id);
+    ('个人博客系统', '使用React、TypeScript和Node.js构建的现代化个人博客系统', '🚀', '#4F46E5', 'https://github.com/yourusername/personal-blog', user_id),
+    ('在线协作平台', '基于WebSocket的实时协作平台，支持多人同时编辑', '👥', '#059669', 'https://github.com/yourusername/collab-platform', user_id),
+    ('AI助手应用', '集成OpenAI API的智能助手应用，提供智能对话和内容生成功能', '🤖', '#7C3AED', 'https://github.com/yourusername/ai-assistant', user_id);
 
     -- 插入技术栈
     INSERT INTO tech_stacks (name, icon, background, user_id)

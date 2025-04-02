@@ -16,6 +16,11 @@ import {
   insertContactSchema,
   insertCommentSchema
 } from "../shared/schema";
+import { GitHubService } from './services/githubService';
+import dotenv from 'dotenv';
+
+// 加载环境变量
+dotenv.config();
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API endpoints
@@ -356,6 +361,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(comment);
     } catch (error) {
       res.status(400).json({ message: (error as Error).message });
+    }
+  });
+  
+  // GitHub 贡献数据端点
+  apiRouter.get("/github-contributions", async (_req: Request, res: Response) => {
+    try {
+      // 从环境变量获取GitHub用户名
+      const githubUsername = process.env.GITHUB_USERNAME || 'dennis-yew';
+      
+      // 创建GitHub服务实例
+      const githubService = new GitHubService(githubUsername);
+      
+      // 获取贡献数据
+      const { data, total } = await githubService.getContributions();
+      
+      res.json({ 
+        activities: data,
+        total: total,
+        username: githubUsername
+      });
+    } catch (error) {
+      console.error('获取GitHub贡献数据失败:', error);
+      res.status(500).json({ 
+        message: error instanceof Error ? error.message : '获取GitHub贡献数据失败',
+        details: error instanceof Error ? error.stack : undefined
+      });
     }
   });
   

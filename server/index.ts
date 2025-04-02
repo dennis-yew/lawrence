@@ -4,12 +4,6 @@ import { setupVite, serveStatic, log } from "./vite";
 import fs from 'fs';
 import path from 'path';
 
-// 确保上传目录存在
-const uploadsDir = path.join(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
-
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -46,33 +40,47 @@ app.use((req, res, next) => {
 
 (async () => {
   // Test database connection before starting server
-  const { testConnection } = await import("./db");
-  await testConnection();
+  console.log('正在启动服务器...');
+  
+  try {
+    // 尝试测试数据库连接
+    const { testConnection } = await import("./db");
+    const connected = await testConnection();
+    
+    if (!connected) {
+      console.warn('⚠️ 数据库连接测试失败，服务器可能只有部分功能可用');
+    } else {
+      console.log('✅ 数据库连接成功');
+    }
+  } catch (dbError) {
+    console.error('❌ 数据库连接测试出错:', dbError);
+    console.warn('⚠️ 继续启动服务器，但数据库功能可能不可用');
+  }
+
+  // 确保上传目录存在
+  try {
+    const uploadsDir = path.join(process.cwd(), 'uploads');
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+      console.log('✅ 创建上传目录:', uploadsDir);
+    }
+  } catch (fsError) {
+    console.error('❌ 创建上传目录失败:', fsError);
+    console.warn('⚠️ 文件上传功能可能不可用');
+  }
 
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    console.error('全局错误处理器捕获到错误:', err);
-    
     const status = err.status || err.statusCode || 500;
     const message = err.message || "服务器内部错误";
     
-    // 记录详细日志
-    console.error('错误状态码:', status);
-    console.error('错误消息:', message);
+    console.error('服务器错误:', message);
     if (err.stack) {
-      console.error('错误堆栈:', err.stack);
+      console.error(err.stack);
     }
-    
-    // 如果是验证错误，提供更详细的信息
-    if (err.name === 'ZodError' && err.errors) {
-      return res.status(400).json({
-        message: '数据验证失败',
-        errors: err.errors
-      });
-    }
-    
-    res.status(status).json({ message, stack: process.env.NODE_ENV === 'development' ? err.stack : undefined });
+
+    res.status(status).json({ message });
   });
 
   // importantly only setup vite in development and after
@@ -90,10 +98,10 @@ app.use((req, res, next) => {
   const port = 5000;
   try {
     server.listen(port, "127.0.0.1", () => {
-      log(`serving on port ${port}`);
+      console.log(`🚀 服务器启动成功，监听端口 ${port}`);
     });
   } catch (error) {
-    log(`Error starting server: ${error}`);
+    console.error(`❌ 服务器启动失败: ${error}`);
     process.exit(1);
   }
 })();

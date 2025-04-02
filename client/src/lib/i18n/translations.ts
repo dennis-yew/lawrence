@@ -23,7 +23,10 @@ export const translations = {
       contributions: 'contributions',
       days: 'Sun,Mon,Tue,Wed,Thu,Fri,Sat',
       less: 'Less',
-      more: 'More'
+      more: 'More',
+      localData: 'Local Data',
+      githubData: 'GitHub Data',
+      loading: 'Loading...'
     },
     activities: {
       title: 'Activities',
@@ -73,7 +76,10 @@ export const translations = {
       contributions: '贡献',
       days: '周日,周一,周二,周三,周四,周五,周六',
       less: '较少',
-      more: '较多'
+      more: '较多',
+      localData: '本地数据',
+      githubData: 'GitHub数据',
+      loading: '加载中...'
     },
     activities: {
       title: '活动记录',

@@ -52,6 +52,7 @@ export const projects = pgTable("projects", {
   description: text("description").notNull(),
   icon: text("icon").notNull(),
   iconBackground: text("icon_background").notNull(),
+  url: text("url"),
   userId: integer("user_id").notNull(),
 });
 
@@ -60,6 +61,7 @@ export const insertProjectSchema = createInsertSchema(projects).pick({
   description: true,
   icon: true,
   iconBackground: true,
+  url: true,
   userId: true,
 });
 
