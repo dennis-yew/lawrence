@@ -29,19 +29,19 @@ export default function TechStackCard({ techStacks }: TechStackCardProps) {
   };
 
   return (
-    <Card className="card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md col-span-1 transition-all hover:translate-y-[-5px] hover:shadow-lg">
-      <div className="flex items-center mb-4">
-        <Laptop className="text-xl mr-2 dark:text-gray-300" />
-        <h2 className="text-xl font-bold dark:text-white">{t('techStack.title')}</h2>
+    <Card className="card bg-white dark:bg-[#2d2d2d] rounded-2xl p-4 shadow-md col-span-1 transition-all hover:translate-y-[-3px] hover:shadow-lg dark:shadow-[#1d1d1d]">
+      <div className="flex items-center mb-3">
+        <Laptop className="text-lg mr-2 dark:text-gray-300" />
+        <h2 className="text-lg font-bold dark:text-white">{t('techStack.title')}</h2>
       </div>
       
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-3 gap-2">
         {techStacks.map((tech) => (
           <div key={tech.id} className="tech-item flex flex-col items-center">
-            <div className={`icon-wrapper w-12 h-12 rounded-full ${tech.background} flex items-center justify-center mb-2`}>
+            <div className={`icon-wrapper w-10 h-10 rounded-full ${tech.background} flex items-center justify-center mb-1.5`}>
               {getIcon(tech.icon)}
             </div>
-            <span className="text-sm dark:text-gray-300">{tech.name}</span>
+            <span className="text-xs dark:text-gray-300">{tech.name}</span>
           </div>
         ))}
       </div>

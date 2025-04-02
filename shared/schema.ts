@@ -25,12 +25,23 @@ export const posts = pgTable("posts", {
   userId: integer("user_id").notNull(),
 });
 
-export const insertPostSchema = createInsertSchema(posts).pick({
-  title: true,
-  content: true,
-  imageUrl: true,
-  userId: true,
-});
+export const insertPostSchema = createInsertSchema(posts)
+  .pick({
+    title: true,
+    content: true,
+    imageUrl: true,
+    userId: true,
+  })
+  .refine(
+    (data) => {
+      // 确保必填字段存在
+      return !!data.title && !!data.content && typeof data.userId === 'number';
+    },
+    {
+      message: "标题和内容是必填字段，且用户ID必须是数字",
+      path: ['title', 'content', 'userId']
+    }
+  );
 
 export type InsertPost = z.infer<typeof insertPostSchema>;
 export type Post = typeof posts.$inferSelect;

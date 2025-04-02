@@ -13,21 +13,21 @@ export default function PersonalityCard({ profile }: PersonalityCardProps) {
   if (!profile) return null;
 
   return (
-    <Card className="card bg-[#bde0fe] dark:bg-gray-800 bg-opacity-30 rounded-2xl p-6 shadow-md col-span-1 transition-all hover:translate-y-[-5px] hover:shadow-lg">
-      <div className="flex items-center mb-4">
-        <User className="text-xl mr-2 dark:text-gray-300" />
-        <h2 className="text-xl font-bold dark:text-white">{t('personality.title')}</h2>
+    <Card className="card bg-[#bde0fe] dark:bg-[#2d2d2d] bg-opacity-20 rounded-2xl p-5 shadow-sm col-span-1 transition-all hover:translate-y-[-3px] hover:shadow-md dark:shadow-[#1d1d1d]">
+      <div className="flex items-center mb-3">
+        <User className="text-lg mr-2 dark:text-gray-300" />
+        <h2 className="text-lg font-semibold dark:text-white">{t('personality.title')}</h2>
       </div>
       
-      <div className="personality-content text-center py-4">
-        <div className="text-3xl font-bold mb-2 dark:text-white">INTJ</div>
-        <div className="text-gray-600 dark:text-gray-300 mb-6">Mediator</div>
+      <div className="personality-content text-center py-2">
+        <div className="text-2xl font-bold mb-1 dark:text-white">INTJ</div>
+        <div className="text-gray-600 dark:text-gray-300 text-sm mb-4">Mediator</div>
         
         <div className="illustration">
           <img 
-            src="https://www.16personalities.com/static/images/personality-types/avatars/intj-architect.svg" 
+            src="/INTJ_gandalf.svg" 
             alt="INTJ Personality"
-            className="w-32 h-32 mx-auto rounded-full bg-purple-100 dark:bg-purple-900"
+            className="w-28 h-28 mx-auto"
           />
         </div>
       </div>

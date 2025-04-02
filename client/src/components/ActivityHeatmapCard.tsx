@@ -4,6 +4,7 @@ import { CalendarIcon } from "lucide-react";
 import { type Activity } from "@shared/schema";
 import { generateHeatmapData } from "@/utils/generateHeatmapData";
 import { useTranslation } from "@/lib/LanguageContext";
+import { useTheme } from "@/lib/ThemeContext";
 
 interface ActivityHeatmapCardProps {
   activities: Activity[];
@@ -11,6 +12,7 @@ interface ActivityHeatmapCardProps {
 
 export default function ActivityHeatmapCard({ activities }: ActivityHeatmapCardProps) {
   const { t } = useTranslation();
+  const { theme } = useTheme();
   const [heatmapData, setHeatmapData] = useState<{ date: string; count: number; opacity: number }[][]>([]);
   const [months, setMonths] = useState<string[]>([]);
 
@@ -25,7 +27,7 @@ export default function ActivityHeatmapCard({ activities }: ActivityHeatmapCardP
   const days = t('activity.days').split(',');
 
   return (
-    <Card className="card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md col-span-1 md:col-span-2 lg:col-span-2 transition-all hover:translate-y-[-5px] hover:shadow-lg">
+    <Card className="card bg-white dark:bg-[#2d2d2d] rounded-2xl p-6 shadow-md col-span-1 md:col-span-2 lg:col-span-2 transition-all hover:translate-y-[-5px] hover:shadow-lg dark:shadow-[#1d1d1d]">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <CalendarIcon className="text-xl mr-2 dark:text-gray-300" />
@@ -64,14 +66,14 @@ export default function ActivityHeatmapCard({ activities }: ActivityHeatmapCardP
                       margin: '2px',
                       borderRadius: '2px',
                       backgroundColor: cell.count === 0 
-                        ? (document.documentElement.classList.contains('dark') ? '#161b22' : '#ebedf0')
+                        ? (theme === 'dark' ? '#1d1d1d' : '#ebedf0')
                         : cell.count < 3
-                          ? (document.documentElement.classList.contains('dark') ? '#0e4429' : '#9be9a8')
+                          ? (theme === 'dark' ? '#6b46c1' : '#9be9a8')
                           : cell.count < 6
-                            ? (document.documentElement.classList.contains('dark') ? '#006d32' : '#40c463')
+                            ? (theme === 'dark' ? '#805ad5' : '#40c463')
                             : cell.count < 9
-                              ? (document.documentElement.classList.contains('dark') ? '#26a641' : '#30a14e')
-                              : (document.documentElement.classList.contains('dark') ? '#39d353' : '#216e39')
+                              ? (theme === 'dark' ? '#9f7aea' : '#30a14e')
+                              : (theme === 'dark' ? '#b794f4' : '#216e39')
                     }}
                     title={`${cell.date}: ${cell.count} ${t('activity.contributions')}`}
                   >
@@ -85,12 +87,12 @@ export default function ActivityHeatmapCard({ activities }: ActivityHeatmapCardP
         {/* Legend */}
         <div className="legend flex items-center justify-end mt-4">
           <div className="text-xs text-gray-500 dark:text-gray-400 mr-2">{t('activity.less')}</div>
-          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: document.documentElement.classList.contains('dark') ? '#2d3748' : '#eeeeee'}}></div>
-          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: document.documentElement.classList.contains('dark') ? '#6b46c1' : '#d1c1e0', opacity: 0.2}}></div>
-          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: document.documentElement.classList.contains('dark') ? '#6b46c1' : '#d1c1e0', opacity: 0.4}}></div>
-          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: document.documentElement.classList.contains('dark') ? '#6b46c1' : '#d1c1e0', opacity: 0.6}}></div>
-          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: document.documentElement.classList.contains('dark') ? '#805ad5' : '#9b59b6', opacity: 0.8}}></div>
-          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: document.documentElement.classList.contains('dark') ? '#805ad5' : '#9b59b6', opacity: 1}}></div>
+          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: theme === 'dark' ? '#2d3748' : '#eeeeee'}}></div>
+          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: theme === 'dark' ? '#6b46c1' : '#d1c1e0', opacity: 0.2}}></div>
+          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: theme === 'dark' ? '#6b46c1' : '#d1c1e0', opacity: 0.4}}></div>
+          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: theme === 'dark' ? '#6b46c1' : '#d1c1e0', opacity: 0.6}}></div>
+          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: theme === 'dark' ? '#805ad5' : '#9b59b6', opacity: 0.8}}></div>
+          <div className="activity-cell" style={{width: '12px', height: '12px', margin: '2px', borderRadius: '2px', backgroundColor: theme === 'dark' ? '#805ad5' : '#9b59b6', opacity: 1}}></div>
           <div className="text-xs text-gray-500 dark:text-gray-400 ml-2">{t('activity.more')}</div>
         </div>
       </div>

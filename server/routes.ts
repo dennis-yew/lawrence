@@ -2,6 +2,10 @@ import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
+import { upload } from './middleware/upload';
+import path from 'path';
+import express from 'express';
+import fs from 'fs';
 import { 
   insertPostSchema, 
   insertProjectSchema, 
@@ -11,7 +15,7 @@ import {
   insertProfileSchema,
   insertContactSchema,
   insertCommentSchema
-} from "@shared/schema";
+} from "../shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API endpoints
@@ -153,13 +157,120 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  apiRouter.post("/posts", async (req: Request, res: Response) => {
+  apiRouter.post("/posts", upload.fields([
+    { name: 'md', maxCount: 1 },
+    { name: 'image', maxCount: 1 }
+  ]), async (req: Request, res: Response) => {
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+    let mdFile: Express.Multer.File | null = null;
+    let imageFile: Express.Multer.File | null = null;
+    
     try {
-      const validatedData = insertPostSchema.parse(req.body);
-      const post = await storage.createPost(validatedData);
-      res.status(201).json(post);
+      if (!files.md || !files.md[0]) {
+        throw new Error("请上传 Markdown 文件");
+      }
+
+      mdFile = files.md[0];
+      imageFile = files.image?.[0] || null;
+      
+      // 验证文件类型
+      if (!mdFile.originalname.toLowerCase().endsWith('.md')) {
+        throw new Error("请上传 .md 格式的文件");
+      }
+      
+      if (imageFile && !imageFile.mimetype.startsWith('image/')) {
+        throw new Error("请上传有效的图片文件");
+      }
+      
+      // 读取 Markdown 文件内容
+      const content = fs.readFileSync(mdFile.path, 'utf-8');
+      
+      // 提取标题
+      const titleMatch = content.match(/^#\s+(.+)$/m);
+      const title = titleMatch ? titleMatch[1].trim() : mdFile.originalname.replace(/\.md$/, '');
+      
+      console.log("文章数据:", {
+        title,
+        contentLength: content.length,
+        imageFile: imageFile ? imageFile.filename : 'none',
+      });
+      
+      // 处理图片
+      let imageUrl = null;
+      if (imageFile) {
+        imageUrl = `/uploads/${imageFile.filename}`;
+      }
+      
+      try {
+        // 创建博客文章数据对象
+        const postData = {
+          title,
+          content,
+          imageUrl,
+          userId: 1 // 使用默认用户ID
+        };
+        
+        console.log("发送到数据库的文章数据:", postData);
+        
+        // 验证数据
+        const validatedData = insertPostSchema.parse(postData);
+        
+        // 创建博客文章
+        const post = await storage.createPost(validatedData);
+        
+        // 删除临时的 Markdown 文件
+        if (mdFile) {
+          try {
+            fs.unlinkSync(mdFile.path);
+          } catch (err) {
+            console.error('删除 Markdown 文件时出错:', err);
+          }
+        }
+        
+        res.status(201).json(post);
+      } catch (dbError: any) {
+        console.error('数据库错误:', dbError);
+        
+        if (dbError.errors && Array.isArray(dbError.errors)) {
+          // Zod 验证错误
+          const errorDetails = dbError.errors.map((e: any) => ({
+            path: e.path,
+            message: e.message
+          }));
+          throw new Error(`数据验证失败: ${JSON.stringify(errorDetails)}`);
+        } else {
+          throw new Error(`保存文章时发生错误: ${dbError.message || '未知错误'}`);
+        }
+      }
     } catch (error) {
-      res.status(400).json({ message: (error as Error).message });
+      // 清理上传的文件
+      if (mdFile) {
+        try {
+          fs.unlinkSync(mdFile.path);
+        } catch (err) {
+          console.error('删除 Markdown 文件时出错:', err);
+        }
+      }
+      if (imageFile) {
+        try {
+          fs.unlinkSync(imageFile.path);
+          // 如果图片已经保存到 uploads 目录，也需要删除
+          if (imageFile.filename) {
+            const imagePath = path.join(process.cwd(), 'uploads', imageFile.filename);
+            if (fs.existsSync(imagePath)) {
+              fs.unlinkSync(imagePath);
+            }
+          }
+        } catch (err) {
+          console.error('删除图片文件时出错:', err);
+        }
+      }
+      
+      console.error('创建文章时出错:', error);
+      res.status(400).json({ 
+        message: error instanceof Error ? error.message : '创建文章失败',
+        details: error instanceof Error ? error.stack : undefined
+      });
     }
   });
   
@@ -248,6 +359,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Serve uploaded files
+  app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
+  // File upload endpoint
+  apiRouter.post('/upload', upload.single('image'), (req: Request, res: Response) => {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+    const imageUrl = `/uploads/${req.file.filename}`;
+    res.json({ imageUrl });
+  });
+
   // Register API router
   app.use("/api", apiRouter);
 
@@ -255,6 +378,3 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   return httpServer;
 }
-
-// Add missing import
-import express from "express";

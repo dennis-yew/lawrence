@@ -8,7 +8,7 @@ import {
   profiles, type Profile, type InsertProfile,
   contacts, type Contact, type InsertContact,
   comments, type Comment, type InsertComment
-} from "@shared/schema";
+} from "../shared/schema";
 
 export interface IStorage {
   getUsers(): Promise<User[]>;
@@ -122,7 +122,7 @@ export class MemStorage implements IStorage {
       github: 'hiegouhb.cn',
       website: 'website.com',
       personalityType: 'INFP-T',
-      personalityTitle: 'Mediator',
+      personalityTitle: 'Architect',
       userId: user.id
     });
     
@@ -444,7 +444,7 @@ async function initializeData() {
       github: 'hiegouhb.cn',
       website: 'website.com',
       personalityType: 'INFP-T',
-      personalityTitle: 'Mediator',
+      personalityTitle: 'Architect',
       userId: defaultUser.id
     });
     

@@ -13,31 +13,29 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
   if (!profile) return null;
 
   return (
-    <Card className="card bg-[#a8e6cf] dark:bg-gray-800 bg-opacity-20 rounded-2xl p-6 shadow-md col-span-1 flex flex-col items-center text-center transition-all hover:translate-y-[-5px] hover:shadow-lg">
-      <h3 className="text-lg font-medium text-gray-800 dark:text-white mb-4 self-start">{t('profile.title')}</h3>
+    <Card className="card bg-[#a8e6cf] dark:bg-[#2d2d2d] bg-opacity-20 rounded-2xl p-4 shadow-md col-span-1 flex flex-col items-center text-center transition-all hover:translate-y-[-3px] hover:shadow-lg dark:shadow-[#1d1d1d]">
+      <h3 className="text-lg font-medium text-gray-800 dark:text-white mb-3 self-start">{t('profile.title')}</h3>
       
-      <div className="avatar mb-4 w-40 h-40 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
-        <div className="w-full h-full relative bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-          <svg className="h-24 w-24 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
+      <div className="avatar mb-3 w-28 h-28 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+        <div className="avatar mb-3 w-28 h-28 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+          <img src="/61926916.jpeg" alt="头像" className="w-full h-full object-cover"/>
         </div>
       </div>
-      <h1 className="text-2xl font-bold mb-1 dark:text-white">{profile.name}</h1>
-      <p className="text-gray-600 dark:text-gray-400 mb-6">{profile.alias}</p>
+      <h1 className="text-xl font-bold mb-1 dark:text-white">{profile.name}</h1>
+      <p className="text-gray-600 dark:text-gray-400 mb-3">{profile.alias}</p>
       
-      <div className="w-full h-px bg-gray-200 dark:bg-gray-700 my-4"></div>
+      <div className="w-full h-px bg-gray-200 dark:bg-gray-700 my-2"></div>
       
-      <div className="social-links w-full">
+      <div className="social-links w-full grid grid-cols-2 gap-2">
         <a href="https://github.com/dennis-yew" target="_blank" rel="noopener noreferrer" 
-           className="flex items-center justify-center py-2 hover:bg-white hover:bg-opacity-50 dark:hover:bg-gray-700 dark:hover:bg-opacity-70 rounded-lg mb-2 transition-colors">
-          <FaGithub className="mr-2 dark:text-gray-300" />
-          <span className="dark:text-gray-300">GitHub</span>
+           className="flex items-center justify-center py-1.5 hover:bg-white hover:bg-opacity-50 dark:hover:bg-gray-700 dark:hover:bg-opacity-70 rounded-lg transition-colors">
+          <FaGithub className="mr-1.5 dark:text-gray-300" />
+          <span className="dark:text-gray-300 text-sm">GitHub</span>
         </a>
         <a href={`https://${profile.website}`} target="_blank" rel="noopener noreferrer"
-           className="flex items-center justify-center py-2 hover:bg-white hover:bg-opacity-50 dark:hover:bg-gray-700 dark:hover:bg-opacity-70 rounded-lg transition-colors">
-          <FaGlobe className="mr-2 dark:text-gray-300" />
-          <span className="dark:text-gray-300">{profile.website}</span>
+           className="flex items-center justify-center py-1.5 hover:bg-white hover:bg-opacity-50 dark:hover:bg-gray-700 dark:hover:bg-opacity-70 rounded-lg transition-colors">
+          <FaGlobe className="mr-1.5 dark:text-gray-300" />
+          <span className="dark:text-gray-300 text-sm">{profile.website}</span>
         </a>
       </div>
     </Card>

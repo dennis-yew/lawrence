@@ -43,17 +43,17 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center transition-colors duration-200">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#191919] flex items-center justify-center transition-colors duration-200">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-300">Loading...</p>
+          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#f5f7f9] dark:bg-gray-900 min-h-screen transition-colors duration-200">
+    <div className="bg-[#f5f7f9] dark:bg-[#191919] min-h-screen transition-colors duration-200">
       <div className="container mx-auto px-4 py-8">
         {/* 主题和语言切换按钮 */}
         <div className="flex justify-end mb-4 space-x-2">

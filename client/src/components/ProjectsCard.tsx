@@ -42,7 +42,7 @@ export default function ProjectsCard({ projects }: ProjectsCardProps) {
   };
 
   return (
-    <Card className="card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md col-span-1 md:col-span-2 transition-all hover:translate-y-[-5px] hover:shadow-lg">
+    <Card className="card bg-white dark:bg-[#2d2d2d] rounded-2xl p-6 shadow-md col-span-1 md:col-span-2 transition-all hover:translate-y-[-5px] hover:shadow-lg dark:shadow-[#1d1d1d]">
       <div className="flex items-center mb-4">
         <FaRocket className="text-xl mr-2 dark:text-gray-300" />
         <h2 className="text-xl font-bold dark:text-white">{t('projects.title')}</h2>

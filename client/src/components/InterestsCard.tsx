@@ -1,4 +1,4 @@
-import { FaMusic, FaBook, FaFilm, FaStar } from "react-icons/fa";
+import { FaMusic, FaBook, FaFilm, FaStar, FaCode, FaPen, FaLaptopCode } from "react-icons/fa";
 import { type Interest } from "@shared/schema";
 import { Card } from "@/components/ui/card";
 import { useTranslation } from "@/lib/LanguageContext";
@@ -18,13 +18,19 @@ export default function InterestsCard({ interests }: InterestsCardProps) {
         return <FaBook className="text-purple-500 dark:text-purple-400" />;
       case 'fa-film':
         return <FaFilm className="text-purple-500 dark:text-purple-400" />;
+      case 'fa-code':
+        return <FaCode className="text-purple-500 dark:text-purple-400" />;
+      case 'fa-pen':
+        return <FaPen className="text-purple-500 dark:text-purple-400" />;
+      case 'fa-laptop-code':
+        return <FaLaptopCode className="text-purple-500 dark:text-purple-400" />;
       default:
         return null;
     }
   };
 
   return (
-    <Card className="card bg-[#d1c1e0] dark:bg-gray-800 bg-opacity-30 rounded-2xl p-6 shadow-md col-span-1 transition-all hover:translate-y-[-5px] hover:shadow-lg">
+    <Card className="card bg-[#d1c1e0] dark:bg-[#2d2d2d] bg-opacity-30 rounded-2xl p-6 shadow-md col-span-1 transition-all hover:translate-y-[-5px] hover:shadow-lg dark:shadow-[#1d1d1d]">
       <div className="flex items-center mb-4">
         <FaStar className="text-[#9b59b6] dark:text-purple-400 text-xl mr-2" />
         <h2 className="text-xl font-bold dark:text-white">{t('interests.title')}</h2>
