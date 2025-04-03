@@ -1,7 +1,32 @@
+import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { CalendarIcon, GithubIcon } from "lucide-react";
+import { type Activity } from "@shared/schema";
 import { useTranslation } from "@/lib/LanguageContext";
 import { useTheme } from "@/lib/ThemeContext";
+import { Button } from "@/components/ui/button";
+
+interface ActivityHeatmapCardProps {
+  activities: Activity[];
+}
+
+// 热力图数据格式
+interface HeatmapCell {
+  date: string;
+  formattedDate: string;
+  count: number;
+  color: string;
+}
+
+// GitHub贡献数据类型
+interface GitHubContributions {
+  activities: Activity[];
+  total: number;
+  username: string;
+}
+
+// 一天的毫秒数
+const DAY_IN_MS = 1000 * 60 * 60 * 24;
 
 export default function ActivityHeatmapCard() {
   const { t } = useTranslation();
