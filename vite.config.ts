@@ -27,7 +27,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "client", "src"),
       "@shared": path.resolve(__dirname, "shared"),
       "@assets": path.resolve(__dirname, "attached_assets"),
-    },
+    }
   },
   root: path.resolve(__dirname, "client"),
   build: {
@@ -60,10 +60,15 @@ export default defineConfig({
             'clsx',
             'tailwind-merge'
           ]
-        }
+        },
+        format: 'es',
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
       }
     },
     minify: 'esbuild',
-    sourcemap: false
+    sourcemap: false,
+    target: 'esnext'
   }
 });

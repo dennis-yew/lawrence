@@ -5,6 +5,26 @@
 [build.environment]
   NODE_VERSION = "20"
 
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/*.mjs"
+  [headers.values]
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/*.js.map"
+  [headers.values]
+    Content-Type = "application/json"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Content-Type = "text/css"
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
