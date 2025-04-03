@@ -2,13 +2,17 @@ import { FaGithub, FaGlobe } from "react-icons/fa";
 import { type Profile } from "@shared/schema";
 import { Card } from "@/components/ui/card";
 import { useTranslation } from "@/lib/LanguageContext";
+import { useState } from "react";
+import { Activity } from "@/types/activity";
 
 interface ProfileCardProps {
   profile?: Profile;
+  propActivities: Activity[];
 }
 
-export default function ProfileCard({ profile }: ProfileCardProps) {
+export default function ProfileCard({ profile, propActivities }: ProfileCardProps) {
   const { t } = useTranslation();
+  const [activities, setActivities] = useState<Activity[]>(propActivities);
   
   if (!profile) return null;
 
