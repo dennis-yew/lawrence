@@ -10,38 +10,64 @@ import Footer from "@/components/Footer";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageSwitch } from "@/components/LanguageSwitch";
 import { useTranslation } from "@/lib/LanguageContext";
-import { type Profile, type TechStack, type Interest, type Project, type Post } from "@shared/schema";
+import { type Profile, type TechStack, type Interest, type Project } from "@shared/schema";
+import { type ApiPost, type ApiActivity } from "@/types/api";
 
 // 示例数据，避免API依赖
 const mockProfile: Profile = {
   id: 1,
   name: 'Dennis Yew',
+  alias: null,
   avatar: 'https://via.placeholder.com/150',
-  title: 'Software Developer',
-  bio: '全栈开发者，热爱技术和创新',
-  location: '中国',
-  email: 'example@example.com',
-  personality: ['创新', '专注', '持续学习']
+  github: 'https://github.com/dennis-yew',
+  website: null,
+  personalityType: '创新者',
+  personalityTitle: '全栈开发者',
+  userId: 1
 };
 
 const mockTechStacks: TechStack[] = [
-  { id: 1, name: 'React', icon: 'react', level: 9 },
-  { id: 2, name: 'TypeScript', icon: 'typescript', level: 8 },
-  { id: 3, name: 'Node.js', icon: 'node', level: 8 }
+  { id: 1, name: 'React', icon: 'react', background: '#61dafb', userId: 1 },
+  { id: 2, name: 'TypeScript', icon: 'typescript', background: '#3178c6', userId: 1 },
+  { id: 3, name: 'Node.js', icon: 'node', background: '#339933', userId: 1 }
 ];
 
 const mockInterests: Interest[] = [
-  { id: 1, name: '编程', icon: 'code' },
-  { id: 2, name: '阅读', icon: 'book' },
-  { id: 3, name: '音乐', icon: 'music' }
+  { id: 1, name: '编程', description: '热爱编写代码', icon: 'code', userId: 1 },
+  { id: 2, name: '阅读', description: '喜欢阅读技术书籍', icon: 'book', userId: 1 },
+  { id: 3, name: '音乐', description: '听音乐放松心情', icon: 'music', userId: 1 }
 ];
 
 const mockProjects: Project[] = [
-  { id: 1, name: '个人博客', description: '使用React和Node.js构建的个人博客', image: 'https://via.placeholder.com/300x200', link: '#' }
+  { 
+    id: 1, 
+    name: '个人博客', 
+    description: '使用React和Node.js构建的个人博客', 
+    icon: 'fa-code',
+    iconBackground: '#4f46e5',
+    url: 'https://github.com/dennis-yew/lawrence',
+    userId: 1
+  }
 ];
 
-const mockPosts: Post[] = [
-  { id: 1, title: '欢迎来到我的博客', content: '这是我的第一篇博客文章', image: 'https://via.placeholder.com/300x200', createdAt: new Date() }
+const mockActivities: ApiActivity[] = [
+  { 
+    id: 1,
+    date: new Date().toISOString(),
+    count: 5,
+    userId: 1
+  }
+];
+
+const mockPosts: ApiPost[] = [
+  { 
+    id: 1, 
+    title: '欢迎来到我的博客', 
+    content: '这是我的第一篇博客文章', 
+    imageUrl: 'https://via.placeholder.com/300x200', 
+    createdAt: new Date().toISOString(),
+    userId: 1
+  }
 ];
 
 export default function Home() {
@@ -77,7 +103,7 @@ export default function Home() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <ProfileCard profile={mockProfile} />
+          <ProfileCard profile={mockProfile} propActivities={mockActivities} />
           <TechStackCard techStacks={mockTechStacks} />
           <InterestsCard interests={mockInterests} />
           <PersonalityCard profile={mockProfile} />
