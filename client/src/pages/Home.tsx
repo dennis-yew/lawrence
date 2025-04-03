@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from 'react';
 import ProfileCard from "@/components/ProfileCard";
 import TechStackCard from "@/components/TechStackCard";
 import InterestsCard from "@/components/InterestsCard";
@@ -10,36 +10,51 @@ import Footer from "@/components/Footer";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageSwitch } from "@/components/LanguageSwitch";
 import { useTranslation } from "@/lib/LanguageContext";
-import { type Profile, type TechStack, type Interest, type Project, type Post, type Activity } from "@shared/schema";
+import { type Profile, type TechStack, type Interest, type Project, type Post } from "@shared/schema";
+
+// 示例数据，避免API依赖
+const mockProfile: Profile = {
+  id: 1,
+  name: 'Dennis Yew',
+  avatar: 'https://via.placeholder.com/150',
+  title: 'Software Developer',
+  bio: '全栈开发者，热爱技术和创新',
+  location: '中国',
+  email: 'example@example.com',
+  personality: ['创新', '专注', '持续学习']
+};
+
+const mockTechStacks: TechStack[] = [
+  { id: 1, name: 'React', icon: 'react', level: 9 },
+  { id: 2, name: 'TypeScript', icon: 'typescript', level: 8 },
+  { id: 3, name: 'Node.js', icon: 'node', level: 8 }
+];
+
+const mockInterests: Interest[] = [
+  { id: 1, name: '编程', icon: 'code' },
+  { id: 2, name: '阅读', icon: 'book' },
+  { id: 3, name: '音乐', icon: 'music' }
+];
+
+const mockProjects: Project[] = [
+  { id: 1, name: '个人博客', description: '使用React和Node.js构建的个人博客', image: 'https://via.placeholder.com/300x200', link: '#' }
+];
+
+const mockPosts: Post[] = [
+  { id: 1, title: '欢迎来到我的博客', content: '这是我的第一篇博客文章', image: 'https://via.placeholder.com/300x200', createdAt: new Date() }
+];
 
 export default function Home() {
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(true);
   
-  const { data: profile, isLoading: profileLoading } = useQuery<Profile>({
-    queryKey: ['/api/profile']
-  });
-
-  const { data: techStacks, isLoading: techStacksLoading } = useQuery<TechStack[]>({
-    queryKey: ['/api/tech-stacks']
-  });
-
-  const { data: interests, isLoading: interestsLoading } = useQuery<Interest[]>({
-    queryKey: ['/api/interests']
-  });
-
-  const { data: projects, isLoading: projectsLoading } = useQuery<Project[]>({
-    queryKey: ['/api/projects']
-  });
-
-  const { data: activities, isLoading: activitiesLoading } = useQuery<Activity[]>({
-    queryKey: ['/api/activities']
-  });
-
-  const { data: posts, isLoading: postsLoading } = useQuery<Post[]>({
-    queryKey: ['/api/posts']
-  });
-
-  const isLoading = profileLoading || techStacksLoading || interestsLoading || projectsLoading || activitiesLoading || postsLoading;
+  // 模拟加载
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   if (isLoading) {
     return (
@@ -62,13 +77,13 @@ export default function Home() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <ProfileCard profile={profile} />
-          <TechStackCard techStacks={techStacks || []} />
-          <InterestsCard interests={interests || []} />
-          <PersonalityCard profile={profile} />
-          <ProjectsCard projects={projects || []} />
-          <ActivityHeatmapCard activities={activities || []} />
-          <BlogPostsCard posts={posts || []} />
+          <ProfileCard profile={mockProfile} />
+          <TechStackCard techStacks={mockTechStacks} />
+          <InterestsCard interests={mockInterests} />
+          <PersonalityCard profile={mockProfile} />
+          <ProjectsCard projects={mockProjects} />
+          <ActivityHeatmapCard />
+          <BlogPostsCard posts={mockPosts} />
         </div>
         <Footer />
       </div>

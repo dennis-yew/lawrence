@@ -35,44 +35,36 @@ export default defineConfig({
     emptyOutDir: true,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, "client/index.html")
-      },
       output: {
-        manualChunks: {
-          vendor: [
-            'react',
-            'react-dom',
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-dropdown-menu',
-            '@radix-ui/react-tabs'
-          ],
-          ui: [
-            '@radix-ui/react-accordion',
-            '@radix-ui/react-alert-dialog',
-            '@radix-ui/react-avatar',
-            '@radix-ui/react-checkbox',
-            '@radix-ui/react-label',
-            '@radix-ui/react-popover',
-            '@radix-ui/react-select'
-          ],
-          utils: [
-            'axios',
-            'date-fns',
-            'zod',
-            'clsx',
-            'tailwind-merge'
-          ]
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'vendor-react';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'vendor-radix';
+            }
+            return 'vendor';
+          }
         },
-        format: 'es',
-        entryFileNames: 'assets/[name].[hash].js',
-        chunkFileNames: 'assets/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash].[ext]'
+        format: 'umd',
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: (assetInfo) => {
+          const extType = assetInfo.name.split('.').at(1);
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
+            return 'assets/images/[name][extname]';
+          }
+          if (/woff|woff2|ttf|eot/i.test(extType)) {
+            return 'assets/fonts/[name][extname]';
+          }
+          return 'assets/[name][extname]';
+        }
       }
     },
-    minify: 'esbuild',
+    minify: true,
     sourcemap: false,
-    target: 'esnext'
+    target: 'es2015'
   },
   server: {
     proxy: {
