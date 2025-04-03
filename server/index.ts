@@ -92,12 +92,12 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
+  // 使用环境变量PORT或默认值
+  const port = process.env.PORT || 5000;
+  const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1';
+  
   try {
-    server.listen(port, "127.0.0.1", () => {
+    server.listen(port, host, () => {
       console.log(`🚀 服务器启动成功，监听端口 ${port}`);
     });
   } catch (error) {
