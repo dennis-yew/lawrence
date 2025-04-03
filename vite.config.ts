@@ -40,21 +40,30 @@ export default defineConfig({
           vendor: [
             'react',
             'react-dom',
-            'react-router-dom',
             '@radix-ui/react-dialog',
             '@radix-ui/react-dropdown-menu',
-            '@radix-ui/react-tabs',
+            '@radix-ui/react-tabs'
           ],
           ui: [
             '@radix-ui/react-accordion',
             '@radix-ui/react-alert-dialog',
             '@radix-ui/react-avatar',
             '@radix-ui/react-checkbox',
+            '@radix-ui/react-label',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-select'
           ],
-        },
-      },
+          utils: [
+            'axios',
+            'date-fns',
+            'zod',
+            'clsx',
+            'tailwind-merge'
+          ]
+        }
+      }
     },
     minify: 'esbuild',
-    sourcemap: false,
-  },
+    sourcemap: false
+  }
 });
